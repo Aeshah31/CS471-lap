@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <title>قائمة الكتب</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <style>
+    body {font-family: system-ui, Tahoma; margin:24px;}
+    table {width:100%; border-collapse: collapse;}
+    th, td {padding:10px; border-bottom:1px solid #ddd; text-align:right;}
+    th {background:#f6f6f6;}
+  </style>
+</head>
+<body>
+  <h1>قائمة الكتب</h1>
+  {% if books %}
+    <table>
+      <thead>
+        <tr>
+          <th>العنوان</th>
+          <th>المؤلف</th>
+          <th>سنة النشر</th>
+          <th>أضيفت في</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for b in books %}
+        <tr>
+          <td>{{ b.title }}</td>
+          <td>{{ b.author }}</td>
+          <td>{{ b.published_year|default:"-" }}</td>
+          <td>{{ b.created_at|date:"Y-m-d H:i" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>لا توجد كتب بعد. أضيفي بعض الكتب من لوحة الإدارة.</p>
+  {% endif %}
+</body>
+</html>
