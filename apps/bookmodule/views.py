@@ -1,5 +1,6 @@
 
 from django.shortcuts import render 
+from django.http import HttpResponse
 
 def index(request):
     name = request.GET.get("name") or "world!"
@@ -9,7 +10,7 @@ def index(request):
 
  
 def index2(request, val1 = 0):  
-    return render("value1 = "+str(val1))
+    return HttpResponse("value1 = "+str(val1))
 
 
 
