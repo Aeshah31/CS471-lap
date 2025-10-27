@@ -1,0 +1,19 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+ {% block title%} Links {% endblock title%} 
+
+<link rel="stylesheet" href="{% static 'bookmodule/main.css' %}">
+
+
+{% block content %}
+    <br>
+    <a class="green" href="https://www.qu.edu.sa" target="_blank">Go to QU website (open a new tab)</a>
+    <br>
+    <br>
+    <a class="grey" href="https://www.qu.edu.sa" target="_self">Go to QU website (open in the same page/tab)</a>
+    <br>
+    <br>
+    <a href="https://www.qu.edu.sa" class="black">Go to QU website (open in the same page/tab)</a>
+{% endblock content %}
+
