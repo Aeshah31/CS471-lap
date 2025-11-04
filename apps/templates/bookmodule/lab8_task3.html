@@ -1,0 +1,15 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<h2>Task 3 Results</h2>
+
+{% if books %}
+    {% for b in books %}
+        ID: {{ b.id }} — {{ b.title }} — {{ b.author }} — {{ b.edition }}
+        <br>
+    {% endfor %}
+{% else %}
+    No matching books found.
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,7 @@
+<h3>Task 4 Results (Sorted by Title)</h3>
+{% for b in books %}
+  {{ b.title }}
+  <hr>
+{% empty %}
+  <p>No results.</p>
+{% endfor %}

@@ -1,0 +1,7 @@
+<h3>Task 2 Results</h3>
+{% for b in books %}
+  {{ b.title }} — Edition: {{ b.edition }} — Author: {{ b.author }}
+  <hr>
+{% empty %}
+  <p>No results.</p>
+{% endfor %}

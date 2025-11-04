@@ -1,6 +1,11 @@
 
 from django.shortcuts import render 
 from django.http import HttpResponse
+from .models import Booklap
+from django.db.models import Q
+from .models import Booklap, Address, Student
+
+
 
 def index(request):
     name = request.GET.get("name") or "world!"
@@ -71,5 +76,66 @@ def search_view(request):
             if contained: newBooks.append(item)
         return render(request, 'bookmodule/bookList.html', {'books':newBooks})
     return render(request, 'bookmodule/search.html')
+
+
+
+
+# Task 3
+def simple_query(request):
+    mybooks = Booklap.objects.filter(title__icontains='and')
+    return render(request, 'bookmodule/bookoflist.html', {'books': mybooks})
+
+# Task 4
+def complex_query(request):
+    mybooks = (
+        Booklap.objects
+        .filter(author__isnull=False)
+        .filter(title__icontains='and')  
+        .filter(edition__gte=2)
+        .exclude(price__lte=100)
+    )[:10]
+    if mybooks:
+     return render(request, 'bookmodule/bookoflist.html', {'books': mybooks})
+    return render(request, 'bookmodule/index.html')
+
+
+def lab8_task1(request):
+    books = Booklap.objects.filter(Q(price__lte=80))
+    return render(request, 'bookmodule/lab8_task1.html', {'books': books})
+
+def lab8_task2(request):
+    books = Booklap.objects.filter(
+        Q(edition__gt=3) & (Q(title__icontains='qu') | Q(author__icontains='qu'))
+    )
+    return render(request, 'bookmodule/lab8_task2.html', {'books': books})
+
+
+def lab8_task3(request):
+    books = Booklap.objects.filter(
+        ~Q(edition__gt=3) & ~(Q(title__icontains='qu') | Q(author__icontains='qu'))
+    )
+    return render(request, 'bookmodule/lab8_task3.html', {'books': books})
+
+
+def lab8_task4(request):
+    books = Booklap.objects.order_by('title')
+    return render(request, 'bookmodule/lab8_task4.html', {'books': books})
+
+from django.db.models import Count, Sum, Avg, Max, Min
+
+def lab8_task5(request):
+    data = Booklap.objects.aggregate(
+        total_books=Count('id'),
+        total_price=Sum('price'),
+        avg_price=Avg('price'),
+        max_price=Max('price'),
+        min_price=Min('price'),
+    )
+    return render(request, 'bookmodule/lab8_task5.html', {'data': data})
+
+def lab8_task7(request):
+    data = Address.objects.annotate(total_students=Count('student'))
+    return render(request, 'bookmodule/lab8_task7.html', {'data': data})
+
 
 

@@ -1,0 +1,7 @@
+<h3>Task 1 Results</h3>
+{% for b in books %}
+  ID: {{ b.id }} — {{ b.title }} — {{ b.price }}
+  <hr>
+{% empty %}
+  <p>No results.</p>
+{% endfor %}
