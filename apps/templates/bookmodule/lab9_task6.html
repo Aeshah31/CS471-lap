@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task 6 - Filtered Books by Price & Quantity</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #888;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Task 6: Books Count (Price > 50 and Quantity between 1–4)</h2>
+
+<table>
+    <tr>
+        <th>Publisher Name</th>
+        <th>Books Matching Condition</th>
+    </tr>
+
+    {% for p in publishers %}
+    <tr>
+        <td>{{ p.name }}</td>
+        <td>{{ p.book_count }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="2">No data found.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

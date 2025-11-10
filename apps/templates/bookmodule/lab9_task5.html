@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task 5 - Highly Rated Books</title>
+    <style>
+        table { border-collapse: collapse; width: 60%; margin: 20px auto; }
+        th, td { border: 1px solid #888; padding: 8px; text-align: center; }
+        th { background-color: #f5f5f5; }
+        h2 { text-align: center; }
+    </style>
+</head>
+<body>
+
+<h2>Task 5: Publishers with Highly Rated Books</h2>
+
+<table>
+    <tr>
+        <th>Publisher</th>
+        <th>Highly Rated Books (rating ≥ 4)</th>
+    </tr>
+    {% for pub in publishers %}
+    <tr>
+        <td>{{ pub.name }}</td>
+        <td>{{ pub.high_rated_count }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="2">No publishers found.</td></tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
