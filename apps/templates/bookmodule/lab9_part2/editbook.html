@@ -1,0 +1,10 @@
+<h1>Edit Booklab (Part 2 - Django Forms)</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update</button>
+</form>
+
+<br>
+<a href="{% url 'lab9_part2_listbooks' %}">Back to list</a>

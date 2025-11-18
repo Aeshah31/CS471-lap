@@ -199,3 +199,129 @@ def task6_view(request):
     )
     return render(request, 'bookmodule/lab9_task6.html', {'publishers': publishers})
 
+
+
+
+
+# ======================================================
+# PART 1 — CRUD بدون Django Forms
+# ======================================================
+# ======================================================
+# PART 1 — CRUD بدون Django Forms (على Booklab)
+# ======================================================
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Booklab
+from .forms import BooklabForm
+
+def listbooks_p1(request):
+    books = Booklab.objects.all()
+    return render(request, 'bookmodule/lab9_part1/listbooks.html', {'books': books})
+
+
+def addbook_p1(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        author = request.POST.get('author')   
+        price = request.POST.get('price')
+        quantity = request.POST.get('quantity')
+        pubdate = request.POST.get('pubdate')
+        rating = request.POST.get('rating')
+
+        if quantity == '':
+            quantity = 1
+        if rating == '':
+            rating = 1
+        if price == '':
+            price = 0.0
+
+        Booklab.objects.create(
+            title=title,
+            price=float(price),
+            quantity=int(quantity),
+            pubdate=pubdate,
+            rating=int(rating),
+        )
+        return redirect('lab9_part1_listbooks')
+
+    return render(request, 'bookmodule/lab9_part1/addbook.html')
+
+
+def editbook_p1(request, id):
+    book = get_object_or_404(Booklab, id=id)
+
+    if request.method == 'POST':
+        book.title = request.POST.get('title')
+        price = request.POST.get('price')
+        quantity = request.POST.get('quantity')
+        pubdate = request.POST.get('pubdate')
+        rating = request.POST.get('rating')
+
+        if price != '':
+            book.price = float(price)
+        if quantity != '':
+            book.quantity = int(quantity)
+        if pubdate != '':
+            book.pubdate = pubdate
+        if rating != '':
+            book.rating = int(rating)
+
+        book.save()
+        return redirect('lab9_part1_listbooks')
+
+    return render(request, 'bookmodule/lab9_part1/editbook.html', {'book': book})
+
+
+def deletebook_p1(request, id):
+    book = get_object_or_404(Booklab, id=id)
+
+    if request.method == 'POST':
+        book.delete()
+        return redirect('lab9_part1_listbooks')
+
+    return render(request, 'bookmodule/lab9_part1/deletebook.html', {'book': book})
+
+
+# ======================================================
+# PART 2 — CRUD باستخدام Django Forms (على Booklab)
+# ======================================================
+
+def listbooks_p2(request):
+    books = Booklab.objects.all()
+    return render(request, 'bookmodule/lab9_part2/listbooks.html', {'books': books})
+
+
+def addbook_p2(request):
+    if request.method == 'POST':
+        form = BooklabForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lab9_part2_listbooks')
+    else:
+        form = BooklabForm()
+
+    return render(request, 'bookmodule/lab9_part2/addbook.html', {'form': form})
+
+
+
+def editbook_p2(request, id):
+    book = get_object_or_404(Booklab, id=id)
+
+    if request.method == 'POST':
+        form = BooklabForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('lab9_part2_listbooks')
+    else:
+        form = BooklabForm(instance=book)
+
+    return render(request, 'bookmodule/lab9_part2/editbook.html', {'form': form, 'book': book})
+
+
+def deletebook_p2(request, id):
+    book = get_object_or_404(Booklab, id=id)
+
+    if request.method == 'POST':
+        book.delete()
+        return redirect('lab9_part2_listbooks')
+
+    return render(request, 'bookmodule/lab9_part2/deletebook.html', {'book': book})
